@@ -1,0 +1,11 @@
+<app-product-filters [filters]="filters$ | async" (filtersChange)="onFiltersChange($event)"/>
+
+<app-sorter [sorting]="sorting$ | async" [byOptions]="sorterByOptions" (sortingChange)="onSortingChange($event)"/>
+
+<ng-container *ngIf="pageAndCollectionSize$ | async as pageAndCollectionSize">
+  <ngb-pagination *ngIf="pageAndCollectionSize.collectionSize"
+  [page]="pageAndCollectionSize.page" [collectionSize]="pageAndCollectionSize.collectionSize"
+  [pageSize]="10" (pageChange)="navigate({ page: $event })"/>
+</ng-container>
+
+<app-products-list *ngIf="products$ | async as products" [products]="products"/>

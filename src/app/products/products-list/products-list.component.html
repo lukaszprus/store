@@ -1,0 +1,16 @@
+<div class="container text-center" *ngIf="products.length; else elseBlock">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+    <div class="col" *ngFor="let product of products; trackBy: productTrackBy">
+      <app-product-tile [product]="product"></app-product-tile>
+      <!-- <pre>{{ product | json }}</pre> -->
+    </div>
+  </div>
+</div>
+
+<ng-template #elseBlock>
+  <div class="card">
+    <div class="card-body">
+      No items
+    </div>
+  </div>
+</ng-template>

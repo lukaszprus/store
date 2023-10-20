@@ -1,0 +1,17 @@
+<form [formGroup]="filtersForm">
+  <label for="category">Category:</label>
+  <select class="form-control custom-select" formControlName="category" id="category">
+    <option></option>
+    <option *ngFor="let category of categories$ | async" [value]="category">{{ category }}</option>
+  </select>
+
+  <label for="brand">Brand:</label>
+  <select class="form-control custom-select" formControlName="brand" id="brand">
+    <option></option>
+    <option *ngFor="let brand of brands$ | async" [value]="brand">{{ brand }}</option>
+  </select>
+
+  <input type="reset" value="Reset" class="btn btn-secondary">
+</form>
+
+<!-- <pre>{{ filtersForm.value | json }}</pre> -->
