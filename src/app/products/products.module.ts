@@ -12,6 +12,7 @@ import { ProductTileComponent } from './product-tile/product-tile.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { SorterComponent } from '../sorter/sorter.component';
 import { ProductsService } from './products.service';
+import { TOGGLE_BACKGROUND_DEFAULT_COLOR, ToggleBackgroundDirective } from '../toggle-background.directive';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { ProductsService } from './products.service';
     HttpClientModule,
     NgbPaginationModule,
     SorterComponent,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    ToggleBackgroundDirective
   ],
-  providers: [ProductsService]
+  providers: [ProductsService, { provide: TOGGLE_BACKGROUND_DEFAULT_COLOR, useValue: 'green' }]
 })
 export class ProductsModule {}

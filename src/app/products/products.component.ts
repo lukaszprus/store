@@ -9,7 +9,7 @@ import { ProductsService } from './products.service';
 import { Sorting } from '../sorter/sorter.component';
 import { Filters } from './product-filters/product-filters.component';
 
-interface ParamOfInterest {
+interface ParamsOfInterest {
   page: string;
   sortBy?: string;
   sortType?: string;
@@ -21,7 +21,7 @@ interface ParamOfInterest {
   templateUrl: './products.component.html'
 })
 export class ProductsComponent {
-  private readonly paramsOfInterest$: Observable<ParamOfInterest> = this.route.queryParams
+  private readonly paramsOfInterest$: Observable<ParamsOfInterest> = this.route.queryParams
     .pipe(
       map(params => {
         const newParams = pick(params, ['page', 'sortBy', 'sortType', 'category', 'brand']);
@@ -50,7 +50,7 @@ export class ProductsComponent {
 
   private readonly productsAndCollectionSize$ = this.paramsOfInterest$
     .pipe(
-      map(({ page, sortBy, sortType, category, brand }) => {
+      switchMap(({ page, sortBy, sortType, category, brand }) => {
         const params: { [param: string]: string; } = { _page: page, _limit: '10' };
 
         isUndefined(category) || (params['category'] = category);
@@ -58,18 +58,16 @@ export class ProductsComponent {
         isUndefined(sortBy) || (params['_sort'] = sortBy);
         isUndefined(sortType) || (params['_order'] = sortType);
 
-        return params;
-      }),
-      switchMap(params =>
-        this.productsService.getAll(params)
+        return this.productsService.getAll(params)
           .pipe(
             catchError(() => NEVER), // TODO: Handle errors globally through an interceptor
             map(res => ({
               products: res.body!,
               collectionSize: Number(res.headers.get('X-Total-Count')!)
             }))
-          )),
-        shareReplay({ bufferSize: 1, refCount: true })
+          );
+      }),
+      shareReplay({ bufferSize: 1, refCount: true })
     );
 
   readonly products$ = this.productsAndCollectionSize$

@@ -1,11 +1,11 @@
 <form [formGroup]="filtersForm">
-  <label for="category">Category:</label>
+  <label for="category" appToggleBackground>Category:</label>
   <select class="form-control custom-select" formControlName="category" id="category">
     <option></option>
     <option *ngFor="let category of categories$ | async" [value]="category">{{ category }}</option>
   </select>
 
-  <label for="brand">Brand:</label>
+  <label for="brand" appToggleBackground="blue">Brand:</label>
   <select class="form-control custom-select" formControlName="brand" id="brand">
     <option></option>
     <option *ngFor="let brand of brands$ | async" [value]="brand">{{ brand }}</option>
