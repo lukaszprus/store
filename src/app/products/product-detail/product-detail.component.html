@@ -1,1 +1,8 @@
-<p>product-detail works!</p>
+<div *ngIf="id$ | async as id">
+  <a *ngIf="id > 1" [routerLink]="['../', id - 1]">Prev</a>
+  <a [routerLink]="['../', id + 1]">Next</a>
+</div>
+
+<pre>{{ product$ | async | json }}</pre>
+
+<app-products-list *ngIf="someProductsFromSameCategory$ | async as products" [products]="products"/>

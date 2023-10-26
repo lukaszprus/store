@@ -1,8 +1,8 @@
 <form [formGroup]="filtersForm">
   <label for="category" appToggleBackground>Category:</label>
-  <select class="form-control custom-select" formControlName="category" id="category">
-    <option></option>
-    <option *ngFor="let category of categories$ | async" [value]="category">{{ category }}</option>
+  <select class="form-control custom-select" formControlName="categoryId" id="categoryId">
+    <option [ngValue]="null"></option>
+    <option *ngFor="let category of categories$ | async" [ngValue]="category.id">{{ category.name }}</option>
   </select>
 
   <label for="brand" appToggleBackground="blue">Brand:</label>
@@ -14,4 +14,4 @@
   <input type="reset" value="Reset" class="btn btn-secondary">
 </form>
 
-<!-- <pre>{{ filtersForm.value | json }}</pre> -->
+<pre>{{ filtersForm.value | json }}</pre>

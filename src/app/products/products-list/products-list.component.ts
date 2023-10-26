@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Product } from '../product';
+import { Product } from '../products';
 
 @Component({
   selector: 'app-products-list',

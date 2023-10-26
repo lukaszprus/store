@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
 import { ProductsService } from '../products.service';
 
 export interface Filters {
-  category: string;
+  categoryId: number | null;
   brand: string;
 }
 
@@ -19,12 +19,16 @@ export class ProductFiltersComponent implements OnInit, OnDestroy, OnChanges {
   @Input() filters: Filters | null | undefined;
   @Output() filtersChange = new EventEmitter<Filters>();
 
-  filtersForm = this.fb.nonNullable.group({ category: '', brand: '' });
+  filtersForm = new FormGroup({
+    categoryId: new FormControl<number | null>(null),
+    brand: new FormControl('', { nonNullable: true })
+  });
+
   private subs: Subscription | undefined;
   categories$ = this.productsService.getAllCategories();
   brands$ = this.productsService.getAllBrands();
 
-  constructor(private readonly productsService: ProductsService, private readonly fb: FormBuilder) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   ngOnChanges() {
     if (this.filters) {

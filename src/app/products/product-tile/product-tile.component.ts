@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Product } from '../product';
+import { Product } from '../products';
 import { TOGGLE_BACKGROUND_DEFAULT_COLOR } from 'src/app/toggle-background.directive';
 
 @Component({

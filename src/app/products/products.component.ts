@@ -13,7 +13,7 @@ interface ParamsOfInterest {
   page: string;
   sortBy?: string;
   sortType?: string;
-  category?: string;
+  categoryId?: string;
   brand?: string;
 }
 
@@ -24,7 +24,7 @@ export class ProductsComponent {
   private readonly paramsOfInterest$: Observable<ParamsOfInterest> = this.route.queryParams
     .pipe(
       map(params => {
-        const newParams = pick(params, ['page', 'sortBy', 'sortType', 'category', 'brand']);
+        const newParams = pick(params, ['page', 'sortBy', 'sortType', 'categoryId', 'brand']);
 
         isUndefined(newParams.page) && (newParams.page = '1');
 
@@ -40,7 +40,7 @@ export class ProductsComponent {
 
   readonly filters$ = this.paramsOfInterest$
     .pipe(
-      map(({ category, brand }) => ({ category: category || '', brand: brand || '' }))
+      map(({ categoryId, brand }) => ({ categoryId: isUndefined(categoryId) ? null : Number(categoryId), brand: brand || '' }))
     );
 
   readonly sorting$ = this.paramsOfInterest$
@@ -50,10 +50,10 @@ export class ProductsComponent {
 
   private readonly productsAndCollectionSize$ = this.paramsOfInterest$
     .pipe(
-      switchMap(({ page, sortBy, sortType, category, brand }) => {
-        const params: { [param: string]: string; } = { _page: page, _limit: '10' };
+      switchMap(({ page, sortBy, sortType, categoryId, brand }) => {
+        const params: { [param: string]: string | number; } = { _page: page, _limit: '10' };
 
-        isUndefined(category) || (params['category'] = category);
+        isUndefined(categoryId) || (params['categoryId'] = Number(categoryId));
         isUndefined(brand) || (params['brand'] = brand);
         isUndefined(sortBy) || (params['_sort'] = sortBy);
         isUndefined(sortType) || (params['_order'] = sortType);
@@ -102,7 +102,7 @@ export class ProductsComponent {
   }
 
   onFiltersChange(filters: Filters) {
-    const queryParams = { page: 1, brand: filters.brand || undefined , category: filters.category || undefined };
+    const queryParams = { page: 1, brand: filters.brand || undefined , categoryId: filters.categoryId || undefined };
 
     this.navigate(queryParams);
   }

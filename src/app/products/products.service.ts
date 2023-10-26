@@ -5,16 +5,18 @@ import { map } from 'rxjs/operators';
 
 import { uniq } from 'lodash';
 
-import { Product } from './product';
+import { Category, Product } from './products';
 
 @Injectable()
 export class ProductsService {
   private readonly http = inject(HttpClient);
 
-  // constructor(private readonly http: HttpClient) {}
-
-  getAll(params: { [param: string]: string; } = {}) {
+  getAll(params: { [param: string]: string | number; } = {}) {
     return this.http.get<Product[]>('/api/products', { params, observe: 'response' });
+  }
+
+  get(id: number) {
+    return this.http.get<Product>('/api/products/' + id);
   }
 
   getAllBrands() {
@@ -24,8 +26,6 @@ export class ProductsService {
   }
 
   getAllCategories() {
-    return this.getAll().pipe(
-      map(res => uniq(res.body!.map(product => product.category)))
-    );
+    return this.http.get<Category[]>('/api/categories');
   }
 }
