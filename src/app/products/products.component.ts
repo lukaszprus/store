@@ -58,7 +58,7 @@ export class ProductsComponent {
         isUndefined(sortBy) || (params['_sort'] = sortBy);
         isUndefined(sortType) || (params['_order'] = sortType);
 
-        return this.productsService.getAll(params)
+        return this.productsService.getAllProducts(params)
           .pipe(
             catchError(() => NEVER), // TODO: Handle errors globally through an interceptor
             map(res => ({

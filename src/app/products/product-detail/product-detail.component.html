@@ -1,8 +1,21 @@
 <div *ngIf="id$ | async as id">
-  <a *ngIf="id > 1" [routerLink]="['../', id - 1]">Prev</a>
-  <a [routerLink]="['../', id + 1]">Next</a>
+  <a mat-raised-button *ngIf="id > 1" [routerLink]="['../', id - 1]">Prev ID: {{ id - 1 }}</a>
+  <a mat-raised-button [routerLink]="['../', id + 1]">Next ID: {{ id + 1 }}</a>
 </div>
 
-<pre>{{ product$ | async | json }}</pre>
+<pre>{{ productWithCategory$ | async | json }}</pre>
 
-<app-products-list *ngIf="someProductsFromSameCategory$ | async as products" [products]="products"/>
+<button mat-raised-button color="primary" (click)="showCrossell = !showCrossell">{{ showCrossell ? 'Hide' : 'Show' }} crossell</button>
+
+<ng-container *ngIf="showCrossell">
+  <ng-container *ngIf="someProductsFromSameCategory$ | async as products">
+    <div *ngIf="products.length; else elseBlock">
+      <h3>Some products from the same category</h3>
+      <app-products-list [products]="products"/>
+    </div>
+
+    <ng-template #elseBlock>
+      <div>No products in the same category</div>
+    </ng-template>
+  </ng-container>
+</ng-container>

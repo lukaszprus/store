@@ -11,21 +11,25 @@ import { Category, Product } from './products';
 export class ProductsService {
   private readonly http = inject(HttpClient);
 
-  getAll(params: { [param: string]: string | number; } = {}) {
+  getAllProducts(params: { [param: string]: string | number; } = {}) {
     return this.http.get<Product[]>('/api/products', { params, observe: 'response' });
   }
 
-  get(id: number) {
+  getProduct(id: number) {
     return this.http.get<Product>('/api/products/' + id);
   }
 
   getAllBrands() {
-    return this.getAll().pipe(
+    return this.getAllProducts().pipe(
       map(res => uniq(res.body!.map(product => product.brand)))
     );
   }
 
   getAllCategories() {
     return this.http.get<Category[]>('/api/categories');
+  }
+
+  getCategory(id: number) {
+    return this.http.get<Category>('/api/categories/' + id);
   }
 }
