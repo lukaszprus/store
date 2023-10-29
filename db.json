@@ -1847,5 +1847,22 @@
       "id": 20,
       "name": "lighting"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Adam",
+      "lastViewedProductId": 3
+    },
+    {
+      "id": 2,
+      "name": "Lucy",
+      "lastViewedProductId": 3
+    },
+    {
+      "id": 3,
+      "name": "Stewart",
+      "lastViewedProductId": 4
+    }
   ]
 }

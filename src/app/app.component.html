@@ -8,7 +8,19 @@
     <li class="nav-item">
       <a class="nav-link" routerLink="products">Products</a>
     </li>
+
+    <li class="nav-item" *ngIf="loggedInUser$ | async as user; else elseBlock">
+      <span>Logged in as {{ user.name }}</span>
+      <button (click)="logout()">Log out</button>
+    </li>
+
+    <ng-template #elseBlock>
+      <li class="nav-item">
+        <button *ngFor="let user of users$ | async" (click)="login(user)">Log in as {{ user.name }}</button>
+      </li>
+    </ng-template>
   </ul>
+
 
   <router-outlet></router-outlet>
 </div>
