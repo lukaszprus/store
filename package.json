@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "startAPI": "json-server db.json --routes routes.json"
+    "startAPI": "json-server db.json --routes routes.json -d 300"
   },
   "private": true,
   "dependencies": {

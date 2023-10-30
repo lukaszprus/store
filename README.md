@@ -10,7 +10,7 @@ Run `npm i` to install dependencies.
 
 ## API server
 
-Run `npx json-server db.json --routes routes.json` to start API.
+Run `npm run startAPI` to start API.
 
 ## Development server
 

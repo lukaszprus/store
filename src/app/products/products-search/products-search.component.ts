@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { EMPTY, Observable, Subject, catchError, forkJoin, map, of, switchMap } from 'rxjs';
+
 import { ProductsService } from '../products.service';
 
 @Component({
@@ -12,26 +13,30 @@ export class ProductsSearchComponent {
 
   readonly products$ = this.searchTerms$
     .pipe(
-      switchMap(searchTerm => this.productsService.getAllProducts({ q: searchTerm })
+      switchMap(searchTerm => searchTerm ? this.productsService.getAllProducts({ q: searchTerm })
         .pipe(
-          catchError(() => EMPTY)
-        )),
-      switchMap(res => {
-        const products = res.body!;
+          catchError(() => EMPTY),
+          switchMap(res => {
+            const products = res.body!;
 
-        const categories$ = products.reduce((acc, product) => {
-          acc[product.categoryId] || (acc[product.categoryId] = this.productsService.getCategory(product.categoryId)
-            .pipe(
-              catchError(() => of(undefined)),
-              map(category => category ? category.name : undefined)
-            ));
+            if (products.length) {
+              const categories$ = products.reduce((acc, product) => {
+                acc[product.categoryId] || (acc[product.categoryId] = this.productsService.getCategory(product.categoryId)
+                  .pipe(
+                    catchError(() => of(undefined)),
+                    map(category => category ? category.name : undefined)
+                  ));
 
-          return acc;
-        }, {} as { [key: number]: Observable<string | undefined>; });
+                return acc;
+              }, {} as { [key: number]: Observable<string | undefined>; });
 
-        return forkJoin(categories$).pipe(
-          map(categories => products.map(product => ({ ...product, categoryName: categories[product.categoryId] })))
-        );
-      })
+              return forkJoin(categories$).pipe(
+                map(categories => products.map(product => ({ ...product, categoryName: categories[product.categoryId] })))
+              );
+            }
+
+            return of(products);
+          })
+        ) : of(null))
     );
 }
