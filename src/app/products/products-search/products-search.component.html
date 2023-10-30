@@ -1,0 +1,3 @@
+<input #search type="text" (input)="searchTerms$.next(search.value)">
+
+<app-products-list *ngIf="products$ | async as products" [products]="products"/>

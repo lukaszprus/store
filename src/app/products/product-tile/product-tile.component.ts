@@ -10,5 +10,5 @@ import { TOGGLE_BACKGROUND_DEFAULT_COLOR } from 'src/app/toggle-background.direc
   providers: [{ provide: TOGGLE_BACKGROUND_DEFAULT_COLOR, useValue: '#d3d3d3' }],
 })
 export class ProductTileComponent {
-  @Input() product!: Product;
+  @Input() product!: Product & { categoryName?: string | undefined; };
 }
