@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let item of resultsStatsLog">
+    Search for '{{ item.query }}' returned {{ item.total }} products{{ item.total ? ' and category id of first product was ' + item.categoryIdOfFirstProduct : '' }}
+  </li>
+</ul>

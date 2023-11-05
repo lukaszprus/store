@@ -15,6 +15,7 @@ import { SorterComponent } from '../sorter/sorter.component';
 import { ProductsService } from './products.service';
 import { TOGGLE_BACKGROUND_DEFAULT_COLOR, ToggleBackgroundDirective } from '../toggle-background.directive';
 import { ProductsSearchComponent } from './products-search/products-search.component';
+import { SearchLogComponent } from './search-log/search-log.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductsSearchComponent } from './products-search/products-search.compo
     ProductFiltersComponent,
     ProductTileComponent,
     ProductsListComponent,
-    ProductsSearchComponent
+    ProductsSearchComponent,
+    SearchLogComponent
   ],
   imports: [
     CommonModule,

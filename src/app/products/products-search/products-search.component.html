@@ -1,3 +1,9 @@
-<input #search type="text" (input)="searchTerms$.next(search.value)">
+<input #query type="text" (input)="queries$.next(query.value)">
 
-<app-products-list *ngIf="products$ | async as products" [products]="products"/>
+<div>
+  <button mat-raised-button color="primary" (click)="showSearchLog = !showSearchLog">{{ showSearchLog ? 'Hide' : 'Show' }} search log</button>
+</div>
+
+<app-search-log *ngIf="showSearchLog"/>
+
+<app-products-list *ngIf="productsWithCategoryName$ | async as products" [products]="products"/>
