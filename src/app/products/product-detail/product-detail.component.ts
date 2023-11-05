@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { EMPTY, Observable, catchError, combineLatest, map, mergeMap, share, shareReplay, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, catchError, combineLatest, map, mergeMap, shareReplay, switchMap, tap } from 'rxjs';
 
 import { ProductsService } from '../products.service';
 import { LoggedInUser } from 'src/app/logged-in-user';
